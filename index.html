@@ -5,193 +5,169 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AVENIX HUB</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --bg:#020617;
-    --text:#fff;
-    --card:rgba(255,255,255,0.08);
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Inter",sans-serif;
 }
 
-body.light {
-    --bg:#f1f5f9;
-    --text:#111;
-    --card:rgba(255,255,255,0.7);
+/* BACKGROUND */
+body{
+background:#050816;
+color:white;
+overflow-x:hidden;
 }
 
-* {
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Poppins",sans-serif;
+/* NEON ANIMATION */
+body::before{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+background:radial-gradient(circle,#00ffff,#a855f7,#050816);
+animation:move 12s linear infinite;
+z-index:-1;
 }
 
-body {
-    background:var(--bg);
-    color:var(--text);
-    overflow-x:hidden;
-}
-
-/* Neon Background */
-body::before {
-    content:"";
-    position:fixed;
-    width:200%;
-    height:200%;
-    background: radial-gradient(circle, #a855f7, #6366f1, #020617);
-    animation:move 10s infinite linear;
-    z-index:-1;
-}
-
-@keyframes move {
-    0%{transform:translate(0,0);}
-    50%{transform:translate(-10%,-10%);}
-    100%{transform:translate(0,0);}
+@keyframes move{
+0%{transform:translate(0,0);}
+50%{transform:translate(-10%,-10%);}
+100%{transform:translate(0,0);}
 }
 
 /* NAV */
-nav {
-    display:flex;
-    justify-content:space-between;
-    padding:20px;
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px;
+backdrop-filter:blur(20px);
 }
 
-/* LOADER */
-.loader {
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:#000;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:999;
-}
-
-.loader span {
-    width:40px;
-    height:40px;
-    border:4px solid #a855f7;
-    border-top:4px solid transparent;
-    border-radius:50%;
-    animation:spin 1s linear infinite;
-}
-
-@keyframes spin {
-    100%{transform:rotate(360deg);}
-}
-
-/* CARD */
-.card {
-    background:var(--card);
-    backdrop-filter:blur(25px);
-    padding:20px;
-    border-radius:20px;
-    margin:20px;
-    box-shadow:0 10px 40px rgba(168,85,247,0.4);
-    transition:0.4s;
-}
-
-.card:hover {
-    transform:scale(1.03);
-}
-
-/* GRID */
-.grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:20px;
+nav h2{
+font-weight:800;
 }
 
 /* BUTTON */
-.btn {
-    padding:10px 20px;
-    border:none;
-    border-radius:25px;
-    margin-top:10px;
-    cursor:pointer;
-    font-weight:bold;
-    color:white;
-    background:linear-gradient(45deg,#a855f7,#6366f1);
-    box-shadow:0 0 20px #a855f7;
+.btn{
+padding:12px 25px;
+border-radius:30px;
+border:none;
+cursor:pointer;
+background:linear-gradient(45deg,#00ffff,#a855f7);
+color:white;
+font-weight:bold;
+box-shadow:0 0 20px #a855f7;
+transition:0.3s;
 }
 
-/* LOGIN */
-.login {
-    max-width:300px;
-    margin:100px auto;
-    text-align:center;
+.btn:hover{
+transform:scale(1.08);
 }
 
-input {
-    width:100%;
-    padding:10px;
-    margin:10px 0;
-    border-radius:10px;
-    border:none;
+/* HERO */
+.hero{
+padding:40px 20px;
+text-align:center;
+}
+
+.hero h1{
+font-size:38px;
+font-weight:800;
+}
+
+.hero span{
+color:#00ffff;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+padding:20px;
+}
+
+/* CARD */
+.card{
+background:rgba(255,255,255,0.05);
+border-radius:25px;
+padding:25px;
+backdrop-filter:blur(30px);
+border:1px solid rgba(255,255,255,0.2);
+box-shadow:0 0 40px rgba(168,85,247,0.3);
+transition:0.4s;
+}
+
+.card:hover{
+transform:translateY(-8px) scale(1.03);
 }
 
 /* TEXT */
-h1 {color:yellow;}
-a {color:#facc15; text-decoration:none;}
+h3{
+margin-bottom:10px;
+}
 
-footer {
-    text-align:center;
-    padding:20px;
+/* CONTACT */
+.contact{
+padding:20px;
+}
+
+a{
+color:#00ffff;
+text-decoration:none;
+}
+
+/* FOOTER */
+footer{
+text-align:center;
+padding:20px;
+opacity:0.7;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOADER -->
-<div class="loader" id="loader">
-    <span></span>
-</div>
-
-<!-- LOGIN -->
-<div class="login" id="loginBox">
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Enter username">
-    <button class="btn" onclick="login()">Login</button>
-</div>
-
-<!-- MAIN -->
-<div id="main" style="display:none;">
-
+<!-- NAV -->
 <nav>
-    <h2>⚡ AVENIX HUB</h2>
-    <button class="btn" onclick="toggleMode()">🌗</button>
+<h2>⚡ AVENIX HUB</h2>
+<button class="btn" onclick="googleLogin()">Google Login</button>
 </nav>
 
+<!-- HERO -->
+<div class="hero">
+<h1>Next Gen <span>Panel Platform</span> 🚀</h1>
+<p>Download Panels & Beta Apps with premium UI</p>
+</div>
+
+<!-- APPS -->
+<div class="grid">
+
 <div class="card">
-    <h1>🔥 AVENIX HUB</h1>
-    <p>Download Panels & Beta Apps</p>
+<h3>Avenix Panel v1.0</h3>
+<p>Best FF Utility Tool</p>
+<button class="btn" onclick="downloadApp()">Download APK</button>
 </div>
 
 <div class="card">
-    <h3>Avenix Panel v1.0</h3>
-    <p>Downloads: <span id="count1">0</span></p>
-    <button class="btn" onclick="downloadApp()">Download APK</button>
+<h3>Beta Panel v2.0</h3>
+<p>Testing Version ⚠️</p>
+<button class="btn">Join Beta</button>
 </div>
 
+</div>
+
+<!-- CONTACT -->
+<div class="contact">
 <div class="card">
-    <h3>Beta Panel v2.0</h3>
-    <p>Testing Version ⚠️</p>
-    <button class="btn">Join Beta</button>
+<p>📷 Instagram: <a href="https://instagram.com/avenixff">@avenixff</a></p>
+<p>📧 Gmail: avenixgaming08@gmail.com</p>
 </div>
-
-<div class="card">
-    <p>📷 Instagram: 
-        <a href="https://instagram.com/avenixff" target="_blank">@avenixff</a>
-    </p>
-
-    <p>📧 Gmail: 
-        <a href="mailto:avenixgaming08@gmail.com">avenixgaming08@gmail.com</a>
-    </p>
-</div>
-
 </div>
 
 <footer>
@@ -200,50 +176,17 @@ footer {
 
 <script>
 
-/* Loader */
-window.onload = () => {
-    setTimeout(()=>{
-        document.getElementById("loader").style.display="none";
-    },1500);
-
-    if(localStorage.getItem("user")){
-        showMain();
-    }
-
-    let c = localStorage.getItem("count1") || 0;
-    document.getElementById("count1").innerText = c;
-}
-
-/* Login */
-function login(){
-    let user = document.getElementById("username").value;
-    if(user){
-        localStorage.setItem("user",user);
-        showMain();
-    }
-}
-
-function showMain(){
-    document.getElementById("loginBox").style.display="none";
-    document.getElementById("main").style.display="block";
-}
-
-/* Dark Mode */
-function toggleMode(){
-    document.body.classList.toggle("light");
-}
-
-/* Download */
+/* DOWNLOAD */
 function downloadApp(){
-    let count = localStorage.getItem("count1") || 0;
-    count++;
-    localStorage.setItem("count1",count);
-    document.getElementById("count1").innerText = count;
+window.open("https://example.com/app.apk"); // 🔥 apna link daalna
+}
 
-    window.open("https://example.com/app.apk"); // 👈 apna link daalna
+/* GOOGLE LOGIN DEMO */
+function googleLogin(){
+alert("Google login ke liye Firebase connect karna padega 🔐");
 }
 
 </script>
 
 </body>
-  </html>
+</html>
