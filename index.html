@@ -1,111 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Avenix Hub</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <style>
     body {
       margin: 0;
       font-family: Arial;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      background: linear-gradient(135deg, #0f172a, #1e293b);
       color: white;
       text-align: center;
     }
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      padding: 20px;
-      font-size: 20px;
-      font-weight: bold;
+    h1 {
+      margin-top: 40px;
     }
 
-    .login-btn {
-      background: #00ffa6;
-      color: black;
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
       border: none;
-      padding: 10px 18px;
-      border-radius: 20px;
+      border-radius: 8px;
+      background: #22c55e;
+      color: white;
       cursor: pointer;
-      font-weight: bold;
+      margin-top: 20px;
     }
 
-    .box {
-      margin-top: 60px;
-      padding: 20px;
+    button:hover {
+      opacity: 0.8;
     }
 
-    .card {
-      background: rgba(255,255,255,0.1);
-      padding: 20px;
-      border-radius: 15px;
-      margin: 20px;
+    #userData {
+      margin-top: 30px;
     }
-  </style>
-</head>
+  </style></head><body><h1>⚡ AVENIX HUB</h1><button onclick="login()">Google Login</button>
 
-<body>
+<div id="userData"></div><!-- Firebase CDN (Stable Version) --><script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script><script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script><script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script><script>
+try {
 
-<div class="header">
-  ⚡ AVENIX HUB
-  <button class="login-btn" onclick="googleLogin()">Google Login</button>
-</div>
+  // 🔥 Firebase Config (Tumhara)
+  const firebaseConfig = {
+    apiKey: "AIzaSyA-qXdBXHHZSIdf_462jQsP0n9GpDPIhJY",
+    authDomain: "avenixhub.firebaseapp.com",
+    projectId: "avenixhub"
+  };
 
-<div class="box">
-  <h1>Welcome to Avenix Hub 🚀</h1>
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
-  <div class="card">
-    <h3>Avenix Panel</h3>
-    <p>Best FF Utility Tool</p>
-    <button class="login-btn">Download APK</button>
-  </div>
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-  <div class="card">
-    <h3>Testing Version ⚠️</h3>
-    <button class="login-btn">Join Beta</button>
-  </div>
-</div>
+  // ✅ Google Login
+  function login() {
+    const provider = new firebase.auth.GoogleAuthProvider();
 
-<!-- 🔥 FIREBASE CODE -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    auth.signInWithPopup(provider)
+      .then((result) => {
+        const user = result.user;
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA-qXdBXHHZSIdf_462jQsP0n9GpDPIhJY",
-  authDomain: "avenixhub.firebaseapp.com",
-  projectId: "avenixhub",
-  storageBucket: "avenixhub.firebasestorage.app",
-  messagingSenderId: "475242197786",
-  appId: "1:475242197786:web:9e590fc8a32c3c54e972a3",
-  measurementId: "G-GTC6T2BZCP"
-};
+        // Save user in Firestore
+        db.collection("users").doc(user.uid).set({
+          name: user.displayName || "No Name",
+          email: user.email,
+          uid: user.uid
+        });
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
-
-window.googleLogin = async function () {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-
-    await setDoc(doc(db, "users", user.uid), {
-      name: user.displayName,
-      email: user.email,
-      uid: user.uid
-    });
-
-    alert("Login Successful 🔥");
-  } catch (error) {
-    alert(error.message);
+        showUser(user);
+      })
+      .catch((error) => {
+        alert("Login Error: " + error.message);
+      });
   }
-};
-</script>
 
-</body>
+  // 👤 Show User Info
+  function showUser(user) {
+    document.getElementById("userData").innerHTML = `
+      <h2>Welcome ${user.displayName}</h2>
+      <p>${user.email}</p>
+      <button onclick="logout()">Logout</button>
+    `;
+  }
+
+  // 🚪 Logout
+  function logout() {
+    auth.signOut().then(() => {
+      location.reload();
+    });
+  }
+
+  // 🔁 Auto Login Detect
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      showUser(user);
+    }
+  });
+
+} catch (e) {
+  document.body.innerHTML = "<h2 style='color:red'>Error: " + e.message + "</h2>";
+}
+</script></body>
 </html>
