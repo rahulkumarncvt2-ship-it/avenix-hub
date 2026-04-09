@@ -1,9 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Avenix Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+      text-align: center;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .login-btn {
+      background: #00ffa6;
+      color: black;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .box {
+      margin-top: 60px;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header">
+  ⚡ AVENIX HUB
+  <button class="login-btn" onclick="googleLogin()">Google Login</button>
+</div>
+
+<div class="box">
+  <h1>Welcome to Avenix Hub 🚀</h1>
+
+  <div class="card">
+    <h3>Avenix Panel</h3>
+    <p>Best FF Utility Tool</p>
+    <button class="login-btn">Download APK</button>
+  </div>
+
+  <div class="card">
+    <h3>Testing Version ⚠️</h3>
+    <button class="login-btn">Join Beta</button>
+  </div>
+</div>
+
+<!-- 🔥 FIREBASE CODE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// 🔥 TERA FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyA-qXdBXHHZSIdf_462jQsP0n9GpDPIhJY",
   authDomain: "avenixhub.firebaseapp.com",
@@ -14,19 +84,16 @@ const firebaseConfig = {
   measurementId: "G-GTC6T2BZCP"
 };
 
-// Init
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// 🚀 LOGIN FUNCTION
 window.googleLogin = async function () {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    // 🔥 Firestore me auto save
     await setDoc(doc(db, "users", user.uid), {
       name: user.displayName,
       email: user.email,
@@ -39,200 +106,6 @@ window.googleLogin = async function () {
   }
 };
 </script>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AVENIX HUB</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:"Inter",sans-serif;
-}
-
-/* BACKGROUND */
-body{
-background:#050816;
-color:white;
-overflow-x:hidden;
-}
-
-/* NEON ANIMATION */
-body::before{
-content:"";
-position:fixed;
-width:200%;
-height:200%;
-background:radial-gradient(circle,#00ffff,#a855f7,#050816);
-animation:move 12s linear infinite;
-z-index:-1;
-}
-
-@keyframes move{
-0%{transform:translate(0,0);}
-50%{transform:translate(-10%,-10%);}
-100%{transform:translate(0,0);}
-}
-
-/* NAV */
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px;
-backdrop-filter:blur(20px);
-}
-
-nav h2{
-font-weight:800;
-}
-
-/* BUTTON */
-.btn{
-padding:12px 25px;
-border-radius:30px;
-border:none;
-cursor:pointer;
-background:linear-gradient(45deg,#00ffff,#a855f7);
-color:white;
-font-weight:bold;
-box-shadow:0 0 20px #a855f7;
-transition:0.3s;
-}
-
-.btn:hover{
-transform:scale(1.08);
-}
-
-/* HERO */
-.hero{
-padding:40px 20px;
-text-align:center;
-}
-
-.hero h1{
-font-size:38px;
-font-weight:800;
-}
-
-.hero span{
-color:#00ffff;
-}
-
-/* GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-padding:20px;
-}
-
-/* CARD */
-.card{
-background:rgba(255,255,255,0.05);
-border-radius:25px;
-padding:25px;
-backdrop-filter:blur(30px);
-border:1px solid rgba(255,255,255,0.2);
-box-shadow:0 0 40px rgba(168,85,247,0.3);
-transition:0.4s;
-}
-
-.card:hover{
-transform:translateY(-8px) scale(1.03);
-}
-
-/* TEXT */
-h3{
-margin-bottom:10px;
-}
-
-/* CONTACT */
-.contact{
-padding:20px;
-}
-
-a{
-color:#00ffff;
-text-decoration:none;
-}
-
-/* FOOTER */
-footer{
-text-align:center;
-padding:20px;
-opacity:0.7;
-}
-</style>
-</head>
-
-<body>
-
-<!-- NAV -->
-<nav>
-<h2>⚡ AVENIX HUB</h2>
-<button class="btn" onclick="googleLogin()">Google Login</button>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-<h1>Next Gen <span>Panel Platform</span> 🚀</h1>
-<p>Download Panels & Beta Apps with premium UI</p>
-</div>
-
-<!-- APPS -->
-<div class="grid">
-
-<div class="card">
-<h3>Avenix Panel v1.0</h3>
-<p>Best FF Utility Tool</p>
-<button class="btn" onclick="downloadApp()">Download APK</button>
-</div>
-
-<div class="card">
-<h3>Beta Panel v2.0</h3>
-<p>Testing Version ⚠️</p>
-<button class="btn">Join Beta</button>
-</div>
-
-</div>
-
-<!-- CONTACT -->
-<div class="contact">
-<div class="card">
-<p>📷 Instagram: <a href="https://instagram.com/avenixff">@avenixff</a></p>
-<p>📧 Gmail: avenixgaming08@gmail.com</p>
-</div>
-</div>
-
-<footer>
-© 2026 AVENIX HUB
-</footer>
-
-<script>
-
-/* DOWNLOAD */
-function downloadApp(){
-window.open("https://example.com/app.apk"); // 🔥 apna link daalna
-}
-
-/* GOOGLE LOGIN DEMO */
-function googleLogin(){
-alert("Google login ke liye Firebase connect karna padega 🔐");
-}
-
-</script>
 
 </body>
 </html>
-
-<button onclick="googleLogin()" style="padding:10px 20px;border-radius:20px;background:#a855f7;color:white;border:none;">
-  Login with Google 🔥
-</button>
-allow read, write: if true;
