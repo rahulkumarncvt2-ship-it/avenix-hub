@@ -1,3 +1,44 @@
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// 🔥 TERA FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyA-qXdBXHHZSIdf_462jQsP0n9GpDPIhJY",
+  authDomain: "avenixhub.firebaseapp.com",
+  projectId: "avenixhub",
+  storageBucket: "avenixhub.firebasestorage.app",
+  messagingSenderId: "475242197786",
+  appId: "1:475242197786:web:9e590fc8a32c3c54e972a3",
+  measurementId: "G-GTC6T2BZCP"
+};
+
+// Init
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+// 🚀 LOGIN FUNCTION
+window.googleLogin = async function () {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    // 🔥 Firestore me auto save
+    await setDoc(doc(db, "users", user.uid), {
+      name: user.displayName,
+      email: user.email,
+      uid: user.uid
+    });
+
+    alert("Login Successful 🔥");
+  } catch (error) {
+    alert(error.message);
+  }
+};
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -190,3 +231,8 @@ alert("Google login ke liye Firebase connect karna padega 🔐");
 
 </body>
 </html>
+
+<button onclick="googleLogin()" style="padding:10px 20px;border-radius:20px;background:#a855f7;color:white;border:none;">
+  Login with Google 🔥
+</button>
+allow read, write: if true;
